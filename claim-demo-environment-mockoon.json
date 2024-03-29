@@ -1,0 +1,46 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Claim Demo",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:80/api"
+    }
+  ],
+  "paths": {
+    "/claims": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/hal+json": {
+                "example": "{\n\"_links\": {\n    \"self\": { \"href\": \"/claims\" }\n  }\n}"
+              }
+            },
+            "headers": {}
+          }
+        }
+      }
+    }
+  }
+}

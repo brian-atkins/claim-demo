@@ -1,0 +1,33 @@
+version: '3'
+name: claim-processor
+
+services:
+  claim-processor:
+    image: claim-processor
+    container_name: claim-processor
+    build: .
+    ports:
+      - "2112:80"
+    environment:
+      HY_INSTANCE_NAME: claim-processor development container
+      HY_MONGO_HOST: claim-processor-mongo
+      HY_API_PORT: 80
+      HY_CACHE_CONTROL: no-cache, no-store, must-revalidate
+      HY_CACHE_EXPIRES: 30
+    volumes:
+    - ./logging:/var/log/claim-processor
+    depends_on:
+      - claim-processor-mongo
+
+  claim-processor-mongo:
+    image: mongo
+    container_name: claim-processor-mongo
+    volumes:
+      - claim-processor-mongodb:/data/db
+      - claim-processor-mongodb_config:/data/configdb
+    ports:
+      - "27017:27017"
+
+volumes:
+     claim-processor-mongodb:
+     claim-processor-mongodb_config:
