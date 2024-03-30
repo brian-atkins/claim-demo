@@ -2,7 +2,7 @@ import PySimpleGUI as SimpleGUI
 from halchemy import Api
 import json
 
-# Define the layout of the GUI
+# Define the layout of the GUI for testing
 layout = [
     [SimpleGUI.Text('Name:', size=(20, 1)), SimpleGUI.InputText(default_text='Brian', key='name')],
     [SimpleGUI.Submit('Add Person')],
