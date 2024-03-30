@@ -4,7 +4,6 @@ import json
 
 # Define the layout of the GUI
 layout = [
-    [SimpleGUI.Text('Person', size=(20, 1), font=('Helvetica', 20), text_color='blue')],
     [SimpleGUI.Text('Name:', size=(20, 1)), SimpleGUI.InputText(default_text='Brian', key='name')],
     [SimpleGUI.Submit('Add Person')],
     [SimpleGUI.Submit('Add Claim')],
