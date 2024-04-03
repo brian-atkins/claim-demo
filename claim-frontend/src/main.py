@@ -18,11 +18,13 @@ layout = [
 window = SimpleGUI.Window('Claim Portal', layout)
 
 
+# Initialize halchemy
+api = Api('http://localhost:2112')
+root = api.get()
+
+
 #
 def add_person(name):
-
-    api = Api('http://localhost:2112')
-    root = api.get()
 
     try:
         api.post_to_rel(root, 'people', json.dumps({'name': name}))
@@ -34,9 +36,6 @@ def add_person(name):
 #
 def add_claim(name):
 
-    api = Api('http://localhost:2112')
-    root = api.get()
-
     try:
         api.post_to_rel(root, 'claims', json.dumps({'name': name}))
         print('Claim added successfully!')
@@ -46,9 +45,6 @@ def add_claim(name):
 
 #
 def remove_person(name):
-
-    api = Api('http://localhost:2112')
-    root = api.get()
 
     try:
         people = api.get_from_rel(root, 'people', {'name': name})
@@ -61,9 +57,6 @@ def remove_person(name):
 #
 def remove_claim(name):
 
-    api = Api('http://localhost:2112')
-    root = api.get()
-
     try:
         claims = api.get_from_rel(root, 'claims', {'name': name})
         api.delete_resource(claims.get('_items')[0])
@@ -75,9 +68,6 @@ def remove_claim(name):
 #
 def view_people():
 
-    api = Api('http://localhost:2112')
-    root = api.get()
-
     try:
         people = api.get_from_rel(root, 'people')
         print(people)
@@ -87,9 +77,6 @@ def view_people():
 
 #
 def view_claims():
-
-    api = Api('http://localhost:2112')
-    root = api.get()
 
     try:
         claims = api.get_from_rel(root, 'claims')
