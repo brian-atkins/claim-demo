@@ -20,14 +20,14 @@ window = SimpleGUI.Window('Claim Portal', layout)
 
 # Initialize halchemy
 api = Api('http://localhost:2112')
-root = api.get()
-
+root=api.root.get()
 
 #
 def add_person(name):
 
     try:
-        api.post_to_rel(root, 'people', json.dumps({'name': name}))
+        people = api.follow(root).to('people').get()
+        api.follow(people).to('self').post({'name': name})
         print('Person added successfully!')
     except Exception as e:
         print(f"An error occurred adding person: {str(e)}")
@@ -37,7 +37,8 @@ def add_person(name):
 def add_claim(name):
 
     try:
-        api.post_to_rel(root, 'claims', json.dumps({'name': name}))
+        claims = api.follow(root).to('claims').get()
+        api.follow(claims).to('self').post({'name': name})
         print('Claim added successfully!')
     except Exception as e:
         print(f"An error occurred adding claim: {str(e)}")
@@ -47,8 +48,8 @@ def add_claim(name):
 def remove_person(name):
 
     try:
-        people = api.get_from_rel(root, 'people', {'name': name})
-        api.delete_resource(people.get('_items')[0])
+        people = api.follow(root).to('people').get()
+        api.follow(people).to('self').delete()
         print('Person removed successfully!')
     except Exception as e:
         print(f"An error occurred removing person: {str(e)}")
@@ -58,8 +59,8 @@ def remove_person(name):
 def remove_claim(name):
 
     try:
-        claims = api.get_from_rel(root, 'claims', {'name': name})
-        api.delete_resource(claims.get('_items')[0])
+        claims = api.follow(root).to('claims').get()
+        api.follow(claims).to('self').delete()
         print('Claim removed successfully!')
     except Exception as e:
         print(f"An error occurred removing claim: {str(e)}")
@@ -69,7 +70,7 @@ def remove_claim(name):
 def view_people():
 
     try:
-        people = api.get_from_rel(root, 'people')
+        people = api.follow(root).to('people').get()
         print(people)
     except Exception as e:
         print(f"An error occurred viewing people: {str(e)}")
@@ -79,7 +80,7 @@ def view_people():
 def view_claims():
 
     try:
-        claims = api.get_from_rel(root, 'claims')
+        claims = api.follow(root).to('claims').get()
         print(claims)
     except Exception as e:
         print(f"An error occurred viewing claims: {str(e)}")
