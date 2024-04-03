@@ -46,7 +46,8 @@ def add_claim(name):
 def remove_person(name):
 
     try:
-        api.follow(root).to('people').with_parameters({'name': name}).delete()
+        people = api.follow(root).to('people').with_parameters({'name': name}).get()
+        api.follow(people['_items'][0]).to('self').delete()
         print('Person removed successfully!')
     except Exception as e:
         print(f"An error occurred removing person: {str(e)}")
@@ -56,7 +57,8 @@ def remove_person(name):
 def remove_claim(name):
 
     try:
-        api.follow(root).to('claims').with_parameters({'name': name}).delete()
+        claims = api.follow(root).to('claims').with_parameters({'name': name}).get()
+        api.follow(claims['_items'][0]).to('self').delete()
         print('Claim removed successfully!')
     except Exception as e:
         print(f"An error occurred removing claim: {str(e)}")
