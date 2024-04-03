@@ -4,7 +4,7 @@ import json
 
 # Define the layout of the GUI for testing
 layout = [
-    [SimpleGUI.Text('Name:', size=(20, 1)), SimpleGUI.InputText(default_text='Brian', key='name')],
+    [SimpleGUI.Text('Name:', size=(20, 1)), SimpleGUI.InputText(default_text='', key='name')],
     [SimpleGUI.Submit('Add Person')],
     [SimpleGUI.Submit('Add Claim')],
     [SimpleGUI.Submit('Remove Person')],
@@ -26,8 +26,7 @@ root=api.root.get()
 def add_person(name):
 
     try:
-        people = api.follow(root).to('people').get()
-        api.follow(people).to('self').post({'name': name})
+        api.follow(root).to('people').post({'name': name})
         print('Person added successfully!')
     except Exception as e:
         print(f"An error occurred adding person: {str(e)}")
@@ -37,8 +36,7 @@ def add_person(name):
 def add_claim(name):
 
     try:
-        claims = api.follow(root).to('claims').get()
-        api.follow(claims).to('self').post({'name': name})
+        api.follow(root).to('claims').post({'name': name})
         print('Claim added successfully!')
     except Exception as e:
         print(f"An error occurred adding claim: {str(e)}")
@@ -48,8 +46,7 @@ def add_claim(name):
 def remove_person(name):
 
     try:
-        people = api.follow(root).to('people').get()
-        api.follow(people).to('self').delete()
+        api.follow(root).to('people').with_parameters({'name': name}).delete()
         print('Person removed successfully!')
     except Exception as e:
         print(f"An error occurred removing person: {str(e)}")
@@ -59,8 +56,7 @@ def remove_person(name):
 def remove_claim(name):
 
     try:
-        claims = api.follow(root).to('claims').get()
-        api.follow(claims).to('self').delete()
+        api.follow(root).to('claims').with_parameters({'name': name}).delete()
         print('Claim removed successfully!')
     except Exception as e:
         print(f"An error occurred removing claim: {str(e)}")
